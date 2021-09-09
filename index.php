@@ -8,11 +8,11 @@ print ("<h1><center>Jeu de combat</center></h1>");
 // print("Expérience = " . $perso1->afficherExperience());
 
 
-$perso1 = new Personnage();
+$perso1 = new Personnage("Bouquet");
 $perso1->definirForce(20);
 $perso1->definirExperience(15);
 
-$perso2 = new Personnage();
+$perso2 = new Personnage("Ricaud");
 $perso2->definirForce(60);
 $perso2->definirExperience(1);
 

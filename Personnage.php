@@ -8,6 +8,11 @@ class Personnage
     private $_experience = 1;
     private $_degats = 0;
 
+    public function __construct($nom){
+        $this->_nom = $nom;
+        print("Le personnage ". $nom . " a été crée !");
+    }
+
     public function definirForce($force){
         $this->_force = $force;
     }
