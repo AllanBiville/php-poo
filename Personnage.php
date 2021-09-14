@@ -7,103 +7,124 @@ class Personnage
     private $_force = 50;
     private $_experience = 1;
     private $_degats = 0;
+
+    const FORCE_PETITE  = 20;
+    const FORCE_MOYENNE = 50;
+    const FORCE_GRANDE  = 80;
+
+    private static $_texteADire = " Qui veut se battre ?";
+    private static $_nbreJoueurs = 0;
 //############################################//
-    public function __construct($nom, $force = 50, $degats = 0)
+    public function __construct(string $nom, int $force = 50, int $degats = 0)
     {
         $this->setNom($nom);
         $this->setForce($force);
         $this->setDegats($degats);
         $this->setExperience(1);
-        print("<br/>Le personnage " . $nom . " a été crée !<br/>");
+        self::$_nbreJoueurs++;
+        print("<br/>Le personnage " . $nom . " a été crée !");
     }
-    public function __toString(){
-        return $this->getNom();
+    public function __toString(): string
+    {
+        return '<br/>Joueur ' . $this->getNom() . ' / Force = ' . $this->getForce() . ' / Dégats = ' . $this->getDegats() . ' / Expérience = ' . $this->getExperience();
     }
 //############################################//
-    public function setNom($nom)
+    public function setNom(string $nom): Personnage
     {
         if (!is_string($nom)) {
             trigger_error('Il faut du texte !', E_USER_WARNING);
-            return;
+            return $this;
         }
         $this->_nom = $nom;
+        return $this;
     }
-    public function getNom()
+    public function getNom(): string
     {
         return $this->_nom;
     }
 //############################################//
-    public function setForce($force)
+    public function setForce(int $force): Personnage
     {
         if (!is_int($force)) {
             trigger_error("Il faut un nombre !", E_USER_WARNING);
-            return;
+            return $this;
         }
         if ($force > 100) {
             trigger_error("Il faut un nombre inférieur à 100 !", E_USER_WARNING);
-            return;
+            return $this;
         }
-        $this->_force = $force;
+        if(in_array($force, array(self::FORCE_PETITE, self::FORCE_MOYENNE, self::FORCE_GRANDE))){
+            $this->_force = $force;
+            return $this;
+        } else {
+            trigger_error('Force non correcte', E_USER_ERROR);
+            return $this;
+        }
     }
-    public function getForce()
+    public function getForce(): int
     {
         return $this->_force;
     }
 //############################################//
-    public function setDegats($degats)
+    public function setDegats(int $degats): Personnage
     {
         if (!is_int($degats)) {
             trigger_error("Il faut un nombre !", E_USER_WARNING);
-            return;
+            return $this;
         }
         if ($degats > 100) {
             trigger_error("Il faut un nombre inférieur à 100 !", E_USER_WARNING);
-            return;
+            return $this;
         }
         $this->_degats = $degats;
+        return $this;
     }
-    public function getDegats()
+    public function getDegats(): int
     {
         return $this->_degats;
     }
 //############################################//
-    public function setExperience($experience)
+    public function setExperience(int $experience): Personnage
     {
         if (!is_int($experience)) {
             trigger_error("Il faut un nombre !", E_USER_WARNING);
-            return;
+            return $this;
         }
         if ($experience > 100) {
             trigger_error("Il faut un nombre inférieur à 100 !", E_USER_WARNING);
-            return;
+            return $this;
         }
         $this->_experience = $experience;
+        return $this;
     }
-    public function getExperience()
+    public function getExperience(): int
     {
         return $this->_experience;
     }
-    public function winExperience()
+    public function winExperience(): Personnage
     {
         $this->_experience++;
-        print("<br/>" . $this->getNom()." a gagné 1 points d'expérience ! <br/>");
+        print($this->getNom() . " a gagné 1 points d'expérience ! <br/>");
+        return $this;
     }
 //############################################//
-    public function parler()
+    public static function parler()
     {
-        print("Je suis un personnage");
+        print("<br/>Je suis un personnage n°".self::$_nbreJoueurs . ' ' . self::$_texteADire);
+
     }
 
-    public function frapper(Personnage $adversaire)
+    public function frapper(Personnage $adversaire): Personnage
     {
         // $adversaire->_degats = $adversaire->_degats + $this->_force;
         $adversaire->_degats += $this->_force;
-        print('<br/>'. $adversaire->getNom() . ' a été frappé par ' . $this->getNom() . ' --> Dégats de ' . $adversaire->getNom().' = ' . $adversaire->getDegats(). ' points de dégats<br/>');
+        print($adversaire->getNom() . ' a été frappé par ' . $this->getNom() . ' --> Dégats de ' . $adversaire->getNom() . ' = ' . $adversaire->getDegats() . ' points de dégats <br/>');
         $this->winExperience();
+        return $this;
     }
-
-
-
-
-
+    public function getResultat()
+    {
+        print("<br/>Nom = " . $this->getNom() . " / Force = " . $this->getForce() . " / Dégats = " . $this->getDegats() . " / Expérience = " . $this->getExperience());
+        //print($this->getNom()->$this->getForce()->$this->getDegats()->getExperience());
+    }
 }
