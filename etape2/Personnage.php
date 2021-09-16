@@ -10,21 +10,28 @@ class Personnage
     private $_degats = 0;
     private $_niveau = 0;
 
-    const FORCE_PETITE  = 20;
+    const FORCE_PETITE = 20;
     const FORCE_MOYENNE = 50;
-    const FORCE_GRANDE  = 80;
+    const FORCE_GRANDE = 80;
 
     private static $_texteADire = " Qui veut se battre ?";
     private static $_nbreJoueurs = 0;
 //############################################//
-    public function __construct(string $nom, int $force = 50, int $degats = 0)
+    public function __construct(array $ligne)
     {
-        $this->setNom($nom);
-        $this->setForce($force);
-        $this->setDegats($degats);
-        $this->setExperience(1);
+        $this->hydrate($ligne);
         self::$_nbreJoueurs++;
-        print("<br/>Le personnage " . $nom . " a été crée !");
+        print("<br/>Le personnage " . $ligne['nom'] . " a été crée !");
+    }
+
+    public function hydrate(array $ligne)
+    {
+        $this->setNom($ligne['nom']);
+        $this->setForce($ligne['force']);
+        $this->setDegats($ligne['degats']);
+        $this->setExperience($ligne['experience']);
+        $this->setNiveau($ligne['niveau']);
+
     }
     public function __toString(): string
     {
@@ -69,7 +76,7 @@ class Personnage
             trigger_error("Il faut un nombre inférieur à 100 !", E_USER_WARNING);
             return $this;
         }
-        if(in_array($force, array(self::FORCE_PETITE, self::FORCE_MOYENNE, self::FORCE_GRANDE))){
+        if (in_array($force, array(self::FORCE_PETITE, self::FORCE_MOYENNE, self::FORCE_GRANDE))) {
             $this->_force = $force;
             return $this;
         } else {
@@ -124,23 +131,23 @@ class Personnage
         return $this;
     }
 //############################################//
-public function setNiveau(int $niveau): Personnage
-{
-    if (!is_int($niveau)) {
-        trigger_error('Il faut un nombre entier !', E_USER_WARNING);
+    public function setNiveau(int $niveau): Personnage
+    {
+        if (!is_int($niveau)) {
+            trigger_error('Il faut un nombre entier !', E_USER_WARNING);
+            return $this;
+        }
+        $this->_niveau = $niveau;
         return $this;
     }
-    $this->_niveau = $niveau;
-    return $this;
-}
-public function getNiveau(): int
-{
-    return $this->_niveau;
-}
+    public function getNiveau(): int
+    {
+        return $this->_niveau;
+    }
 //############################################//
     public static function parler()
     {
-        print("<br/>Je suis un personnage n°".self::$_nbreJoueurs . ' ' . self::$_texteADire);
+        print("<br/>Je suis un personnage n°" . self::$_nbreJoueurs . ' ' . self::$_texteADire);
 
     }
 
