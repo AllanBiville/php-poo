@@ -21,18 +21,27 @@ class Personnage
     {
         $this->hydrate($ligne);
         self::$_nbreJoueurs++;
-        print("<br/>Le personnage " . $ligne['nom'] . " a été crée !");
+        print("<br/>Le personnage " . $this->getNom() . " a été crée !");
     }
 
     public function hydrate(array $ligne)
     {
-        $this->setNom($ligne['nom']);
-        $this->setForce($ligne['force']);
-        $this->setDegats($ligne['degats']);
-        $this->setExperience($ligne['experience']);
-        $this->setNiveau($ligne['niveau']);
-
+        foreach ($ligne as $key => $value) {
+            $method = 'set' . ucfirst($key);
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+            }
+        }
     }
+    // public function hydrate2(array $ligne)
+    // {
+    //     $this->setNom($ligne['nom']);
+    //     $this->setForce($ligne['force']);
+    //     $this->setDegats($ligne['degats']);
+    //     $this->setExperience($ligne['experience']);
+    //     $this->setNiveau($ligne['niveau']);
+    // }
+
     public function __toString(): string
     {
         return '<br/>Joueur ' . $this->getNom() . ' / Force = ' . $this->getForce() . ' / Dégats = ' . $this->getDegats() . ' / Expérience = ' . $this->getExperience();
