@@ -21,7 +21,7 @@ class Personnage
     {
         $this->hydrate($ligne);
         self::$_nbreJoueurs++;
-        print("<br/>Le personnage " . $this->getNom() . " a été crée !");
+        //print("<br/>Le personnage " . $this->getNom() . " a été crée !");
     }
 
     public function hydrate(array $ligne)

@@ -1,13 +1,5 @@
 <?php
-function chargerClasse(string $classe)
-{
-    include $classe . '.php';
-    // include_once $classe . '.php';
-    // require $classe . '.php';
-}
-spl_autoload_register('chargerClasse');
-
-include "conf.php";
+include 'header.php';
 try {
     $db = new PDO($dsn, $user, $password);
     $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
@@ -16,7 +8,8 @@ try {
 
     print ('<br/>Liste des personnages : ');
     foreach ($personnages as $personnage) {
-        print ('<br/>' . $personnages->getNom());
+        print ('<br/><a target="_blank" href="Personnage_view.php?id='. $personnage->getId().'">' . $personnage->getNom()."</a>");
+        
     }
     // $db-> setAttribute(PDO::ATTR_EMULATE_PREPARES,false);
     // if ($db){
