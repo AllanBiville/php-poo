@@ -26,7 +26,15 @@ class PersonnagesManager
     }
     public function getList():array
     {
+        $listeDePersonnages = array();
+        $request = $this->_db->query('SELECT id,nom,`force`, degats,niveau, experience FROM personnages;');
+        while($ligne = $request->fetch(PDO::FETCH_ASSOC))
+         {
+             $perso = new Personnage($ligne);
+             $listeDePersonnages[] = $perso;
 
+         }
+         return $listeDePersonnages;
     }
     public function update(Personnages $perso):bool
     {
