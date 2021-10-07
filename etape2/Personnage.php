@@ -1,18 +1,22 @@
 <?php
 
-class Personnage
+abstract class Personnage
 {
 //############################################//
-    private $_id = 0;
-    private $_nom = 'Inconnu';
-    private $_force = 50;
-    private $_experience = 1;
-    private $_degats = 0;
-    private $_niveau = 0;
+    protected $_id = 0;
+    protected $_nom = 'Inconnu';
+    protected $_force = 50;
+    protected $_experience = 1;
+    protected $_degats = 0;
+    protected $_niveau = 0;
 
     const FORCE_PETITE = 20;
     const FORCE_MOYENNE = 50;
     const FORCE_GRANDE = 80;
+
+    const MAGICIEN = 1;
+    const ARCHER = 2;
+    const BRUTE = 3;
 
     private static $_texteADire = " Qui veut se battre ?";
     private static $_nbreJoueurs = 0;
@@ -160,14 +164,8 @@ class Personnage
 
     }
 
-    public function frapper(Personnage $adversaire): Personnage
-    {
-        // $adversaire->_degats = $adversaire->_degats + $this->_force;
-        $adversaire->_degats += $this->_force;
-        print($adversaire->getNom() . ' a été frappé par ' . $this->getNom() . ' --> Dégats de ' . $adversaire->getNom() . ' = ' . $adversaire->getDegats() . ' points de dégats <br/>');
-        $this->winExperience();
-        return $this;
-    }
+    abstract public function frapper(Personnage $adversaire): Personnage;
+    
     public function getResultat()
     {
         print("<br/>Nom = " . $this->getNom() . " / Force = " . $this->getForce() . " / Dégats = " . $this->getDegats() . " / Expérience = " . $this->getExperience());
