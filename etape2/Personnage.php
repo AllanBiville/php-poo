@@ -9,6 +9,7 @@ abstract class Personnage
     protected $_experience = 1;
     protected $_degats = 0;
     protected $_niveau = 0;
+    protected $_poche = 50;
 
     const FORCE_PETITE = 20;
     const FORCE_MOYENNE = 50;
@@ -48,7 +49,11 @@ abstract class Personnage
 
     public function __toString(): string
     {
-        return '<br/>Joueur ' . $this->getNom() . ' / Force = ' . $this->getForce() . ' / Dégats = ' . $this->getDegats() . ' / Expérience = ' . $this->getExperience();
+        return '<br/>Joueur ' . $this->getNom() .
+        ' / Force = ' . $this->getForce() .
+        ' / Dégats = ' . $this->getDegats() .
+        ' / Expérience = ' . $this->getExperience() .
+        ' / Poche = ' . $this->getPoche();
     }
     //############################################//
     public function setId(int $id): Personnage
@@ -120,6 +125,17 @@ abstract class Personnage
         return $this->_degats;
     }
 //############################################//
+    public function setPoche(int $poche): Personnage
+    {
+        $this->_poche = $poche;
+        return $this;
+    }
+    public function getPoche(): int
+    {
+        return $this->_poche;
+        
+    }
+//############################################//
     public function setExperience(int $experience): Personnage
     {
         if (!is_int($experience)) {
@@ -140,7 +156,7 @@ abstract class Personnage
     public function winExperience(): Personnage
     {
         $this->_experience++;
-        print($this->getNom() . " a gagné 1 points d'expérience ! <br/>");
+        print($this->getNom() . " a gagné 1 points d'expérience !");
         return $this;
     }
 //############################################//
@@ -163,12 +179,16 @@ abstract class Personnage
         print("<br/>Je suis un personnage n°" . self::$_nbreJoueurs . ' ' . self::$_texteADire);
 
     }
+    public function insulter()
+    {
+        print("<br/>Tête de gland !");
+    }
+    abstract public function attaquer(Personnage $adversaire): Personnage;
 
-    abstract public function frapper(Personnage $adversaire): Personnage;
-    
     public function getResultat()
     {
         print("<br/>Nom = " . $this->getNom() . " / Force = " . $this->getForce() . " / Dégats = " . $this->getDegats() . " / Expérience = " . $this->getExperience());
         //print($this->getNom()->$this->getForce()->$this->getDegats()->getExperience());
     }
+
 }

@@ -4,7 +4,7 @@ try {
     $db = new PDO($dsn, $user, $password);
     $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
-    $unMagicien = new Magicien(
+    $unMagicien = new MagicienVoleur(
         [
             'id' =>7,
             'nom' => 'Gandalf',
@@ -16,16 +16,27 @@ try {
                 'nom' => 'Les godasses',
                 'force' => 20,
             ]);
-
-
+            $uneBrute = new BruteVoleur(
+                [
+                    'id' =>9,
+                    'nom' => 'Célien',
+                    'force' => 80,
+                ]);
+    print($unMagicien);
+    print($unAutrePerso);
+    print($uneBrute);
     $combat = new TerrainDeCombat();
     $combat->lancerUnCombat($unMagicien, $unAutrePerso);
+    $combat->lancerUnCombat($unMagicien, $uneBrute);
+    $combat->lancerUnCombat($uneBrute, $unAutrePerso);
 
-    
+    print($unMagicien);
+    print($unAutrePerso);
+    print($uneBrute);
     $personnagesManager = new PersonnagesManager($db);
     $personnages = $personnagesManager->getList();
 
-    print ('<br/>Liste des personnages : ');
+    print ('<br/><br/>Liste des personnages : ');
     foreach ($personnages as $personnage) {
         print ('<br/><a target="_blank" href="Personnage_view.php?id='. $personnage->getId().'">' . $personnage->getNom()."</a>");
         

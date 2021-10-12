@@ -1,11 +1,12 @@
 <?php
 
-class Brute extends Personnage
+final class Brute extends Personnage
 {
-    public function frapper(Personnage $adversaire): Personnage
+    public function attaquer(Personnage $adversaire): Personnage
     {
         $adversaire->_degats += $this->_force;
-        parent::frapper($persoAFrapper);
+        print("<br/>".$adversaire->getNom() . ' a été frappé par ' . $this->getNom() . ' --> Dégats de ' . $adversaire->getNom() . ' = ' . $adversaire->getDegats() . ' points de dégats <br/>');
+        parent::winExperience();
         return $this;
     }
 }

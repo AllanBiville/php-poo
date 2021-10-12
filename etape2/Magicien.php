@@ -1,14 +1,16 @@
 <?php
 
-class Magicien extends Personnage
+final class Magicien extends Personnage
 {
     private $_magie;
 
-    public function frapper(Personnage $adversaire): Personnage
+    public function attaquer(Personnage $adversaire): Personnage
     {
         $adversaire->_degats += $this->_magie;
-        parent::frapper($persoAFrapper);
+        print("<br/>".$adversaire->getNom() . ' a été frappé par ' . $this->getNom() . ' --> Dégats de ' . $adversaire->getNom() . ' = ' . $adversaire->getDegats() . ' points de dégats <br/>');
+        parent::winExperience();
         return $this;
     }
+
 }
 
